@@ -1,0 +1,39 @@
+name: CI-CD-Render-Deploy
+
+on:
+  push:
+    branches:
+      - staging
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy to Render
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          if [ "${GITHUB_REF}" = "refs/heads/main" ]; then
+            echo "Deploying to PRODUCTION"
+            curl -X POST \
+              -H "Authorization: Bearer $RENDER_API_KEY" \
+              https://api.render.com/deploy/srv-d5tfp67gi27c73f6h340
+          elif [ "${GITHUB_REF}" = "refs/heads/staging" ]; then
+            echo "Deploying to STAGING"
+            curl -X POST \
+              -H "Authorization: Bearer $RENDER_API_KEY" \
+              https://api.render.com/deploy/srv-STAGING_SERVICE_ID
+          fi
