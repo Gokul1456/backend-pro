@@ -35,5 +35,5 @@ jobs:
             echo "Deploying to STAGING"
             curl -X POST \
               -H "Authorization: Bearer $RENDER_API_KEY" \
-              https://api.render.com/deploy/srv-STAGING_SERVICE_ID
+               https://api.render.com/deploy/srv-d5tfp67gi27c73f6h340
           fi
