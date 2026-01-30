@@ -6,7 +6,7 @@ app.use(express.json());
 
 // Test route
 app.get("/", (req, res) => {
-  res.send("🚀 Backend is running successfully on Render!");
+  res.send("welcome to my page its our world");
 });
 
 // Sample API
